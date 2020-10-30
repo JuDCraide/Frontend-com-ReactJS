@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import Header from './components/Header'
 
+import backgroundImage from './assets/backgroundImage.jpg';
+import './App.css';
+
 function App() {
 
     const projects = ['API com Node', 'Frontend com React']
@@ -17,12 +20,7 @@ function App() {
     return (
         <>
             <Header title="Home Page" />
-
-            <ul>{
-                projects.map((project, index) =>
-                    <li key={index}>{project}</li>
-                )
-            }</ul>
+            <img src={backgroundImage} width={200} alt="Foguete rumo ao próximo nível" />
 
             <ul>{
                 projectsInState.map((project, index) =>
