@@ -1,35 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Header from './components/Header'
+import api from './services/api'
 
-import backgroundImage from './assets/backgroundImage.jpg';
 import './App.css';
 
 function App() {
 
-    const projects = ['API com Node', 'Frontend com React']
-    const [projectsInState, setProjectsInState] = useState(['API com Node', 'Frontend com React']);
+    const [projects, setProjects] = useState([]);
 
-    function handleAddNewProject() {
-        projects.push(`Novo projeto ${Date.now()}`);
-        setProjectsInState([...projectsInState, `Novo projeto ${Date.now()}`]);
+    useEffect(() => {
+        api.get('projects').then(res => {
+            setProjects(res.data);
+        });
+    }, [])
 
-        console.log("Projects sem estado", projects);
+    async function handleAddNewProject() {
+
     }
 
     return (
         <>
-            <Header title="Home Page" />
-            <img src={backgroundImage} width={200} alt="Foguete rumo ao próximo nível" />
+            <Header title="Projetos" />
 
             <ul>{
-                projectsInState.map((project, index) =>
-                    <li key={index}>{project}</li>
+                projects.map(project =>
+                    <li key={project.id}>{project.title}</li>
                 )
             }</ul>
 
-            <button
-                type="button" onClick={handleAddNewProject}>Adicionar projetos</button>
+            <button type="button" onClick={handleAddNewProject}>
+                Adicionar projetos
+            </button>
         </>
     )
 }
